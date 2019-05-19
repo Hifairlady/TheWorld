@@ -8,4 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MyAppbarTextStyle" parent="TextAppearance.MaterialComponents.Button">
+        <item name="fontFamily">@font/rubik</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MyTabTextStyle" parent="TextAppearance.MaterialComponents.Button">
+        <item name="fontFamily">@font/rubik</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>
