@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-public class ItemsListFragment extends Fragment {
+public class ItemFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -19,13 +19,13 @@ public class ItemsListFragment extends Fragment {
     private String mParam2;
 
 
-    public ItemsListFragment() {
+    public ItemFragment() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static ItemsListFragment newInstance(String param1, String param2) {
-        ItemsListFragment fragment = new ItemsListFragment();
+    public static ItemFragment newInstance(String param1, String param2) {
+        ItemFragment fragment = new ItemFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

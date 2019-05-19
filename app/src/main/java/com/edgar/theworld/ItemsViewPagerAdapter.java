@@ -5,22 +5,27 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import java.util.ArrayList;
+
 public class ItemsViewPagerAdapter extends FragmentPagerAdapter {
 
     private static final String[] PAGE_TITLES = {"WEAPONS", "HELMETS", "CLOTHES", "ACCESSORIES", "WINGS"};
 
-    public ItemsViewPagerAdapter(FragmentManager fm) {
+    private ArrayList<ItemFragment> itemFragments = new ArrayList<>();
+
+    public ItemsViewPagerAdapter(FragmentManager fm, ArrayList<ItemFragment> itemFragments) {
         super(fm);
+        this.itemFragments = itemFragments;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return null;
+        return itemFragments.get(position);
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return (itemFragments == null ? 0 : itemFragments.size());
     }
 
     @Nullable

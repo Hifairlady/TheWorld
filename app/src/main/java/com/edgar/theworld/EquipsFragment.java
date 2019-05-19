@@ -11,6 +11,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
+
 public class EquipsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,7 +54,15 @@ public class EquipsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_equips, container, false);
 
         ViewPager mViewPager = rootView.findViewById(R.id.view_pager_items);
+        ArrayList<ItemFragment> itemFragments = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            ItemFragment itemFragment = ItemFragment.newInstance(null, null);
+            itemFragments.add(itemFragment);
+        }
+        ItemsViewPagerAdapter pagerAdapter = new ItemsViewPagerAdapter(getChildFragmentManager(), itemFragments);
+        mViewPager.setAdapter(pagerAdapter);
         TabLayout mTabLayout = rootView.findViewById(R.id.tab_layout_items);
+        mTabLayout.setupWithViewPager(mViewPager);
 
         return rootView;
     }
