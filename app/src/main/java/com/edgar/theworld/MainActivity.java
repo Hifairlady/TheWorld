@@ -18,6 +18,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.edgar.theworld.WorldUtils.DATA_FILE_NAMES;
+import static com.edgar.theworld.WorldUtils.PAGE_TITLES;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
@@ -83,13 +86,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            List<String> weaponNames = readingNamesFromAsset("items_names/weapons_names.txt");
-            List<String> helmetNames = readingNamesFromAsset("items_names/helmets_names.txt");
-            List<String> clothNames = readingNamesFromAsset("items_names/clothes_names.txt");
-            List<String> accessoryNames = readingNamesFromAsset("items_names/accessories_names.txt");
-            List<String> wingNames = readingNamesFromAsset("items_names/wings_names.txt");
-            List<String> bossIconNames = readingNamesFromAsset("items_names/boss_icons_names.txt");
-            List<String> miscNames = readingNamesFromAsset("items_names/miscs_names.txt");
+            List<String> weaponNames = readingNamesFromAsset(DATA_FILE_NAMES[0]);
+            List<String> helmetNames = readingNamesFromAsset(DATA_FILE_NAMES[1]);
+            List<String> clothNames = readingNamesFromAsset(DATA_FILE_NAMES[2]);
+            List<String> accessoryNames = readingNamesFromAsset(DATA_FILE_NAMES[3]);
+            List<String> wingNames = readingNamesFromAsset(DATA_FILE_NAMES[4]);
+            List<String> bossIconNames = readingNamesFromAsset(DATA_FILE_NAMES[5]);
+            List<String> miscNames = readingNamesFromAsset(DATA_FILE_NAMES[6]);
 
             String[] weaponsArray = weaponNames.toArray(new String[weaponNames.size()]);
             String[] helmetsArray = helmetNames.toArray(new String[helmetNames.size()]);
@@ -99,13 +102,13 @@ public class MainActivity extends AppCompatActivity {
             String[] bossIconsArray = bossIconNames.toArray(new String[bossIconNames.size()]);
             String[] miscsArray = miscNames.toArray(new String[miscNames.size()]);
 
-            appendData("WEAPONS", weaponNames);
-            appendData("HELMETS", helmetNames);
-            appendData("CLOTHES", clothNames);
-            appendData("ACCESSORIES", accessoryNames);
-            appendData("WINGS", wingNames);
-            appendData("BOSS_ICONS", bossIconNames);
-            appendData("MISCS", miscNames);
+            appendData(PAGE_TITLES[0], weaponNames);
+            appendData(PAGE_TITLES[1], helmetNames);
+            appendData(PAGE_TITLES[2], clothNames);
+            appendData(PAGE_TITLES[3], accessoryNames);
+            appendData(PAGE_TITLES[4], wingNames);
+            appendData(PAGE_TITLES[5], bossIconNames);
+            appendData(PAGE_TITLES[6], miscNames);
 
             return null;
         }

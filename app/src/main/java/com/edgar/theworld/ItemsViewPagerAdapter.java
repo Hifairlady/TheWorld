@@ -7,31 +7,32 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
+import static com.edgar.theworld.WorldUtils.MAX_ITEM_PAGE;
+import static com.edgar.theworld.WorldUtils.PAGE_TITLES;
+
 public class ItemsViewPagerAdapter extends FragmentPagerAdapter {
 
-    private static final String[] PAGE_TITLES = {"WEAPONS", "HELMETS", "CLOTHES", "ACCESSORIES", "WINGS"};
+    private ArrayList<ItemPageFragment> itemPageFragments = new ArrayList<>();
 
-    private ArrayList<ItemFragment> itemFragments = new ArrayList<>();
-
-    public ItemsViewPagerAdapter(FragmentManager fm, ArrayList<ItemFragment> itemFragments) {
+    public ItemsViewPagerAdapter(FragmentManager fm, ArrayList<ItemPageFragment> itemPageFragments) {
         super(fm);
-        this.itemFragments = itemFragments;
+        this.itemPageFragments = itemPageFragments;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return itemFragments.get(position);
+        return itemPageFragments.get(position);
     }
 
     @Override
     public int getCount() {
-        return (itemFragments == null ? 0 : itemFragments.size());
+        return (itemPageFragments == null ? 0 : itemPageFragments.size());
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        if (position >= 0 && position < PAGE_TITLES.length) {
+        if (position >= 0 && position < MAX_ITEM_PAGE) {
             return PAGE_TITLES[position];
         }
         return "UNDEFINED";

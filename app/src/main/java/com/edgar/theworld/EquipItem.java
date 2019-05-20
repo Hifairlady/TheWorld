@@ -9,9 +9,17 @@ public class EquipItem {
     @PrimaryKey
     private int itemId;
 
-    private String nameChs, nameEng, itemIndex, itemDescription, itemArt, itemType, itemQuality;
+    private String nameChs, nameEng, itemIndex, itemDescription, itemArt, itemType, itemQuality, itemLevel;
 
     public EquipItem() {
+    }
+
+    public String getItemLevel() {
+        return itemLevel;
+    }
+
+    public void setItemLevel(String itemLevel) {
+        this.itemLevel = itemLevel;
     }
 
     public int getItemId() {

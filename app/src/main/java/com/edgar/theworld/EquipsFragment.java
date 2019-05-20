@@ -54,12 +54,12 @@ public class EquipsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_equips, container, false);
 
         ViewPager mViewPager = rootView.findViewById(R.id.view_pager_items);
-        ArrayList<ItemFragment> itemFragments = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            ItemFragment itemFragment = ItemFragment.newInstance(null, null);
-            itemFragments.add(itemFragment);
+        ArrayList<ItemPageFragment> itemPageFragments = new ArrayList<>();
+        for (int i = 0; i < WorldUtils.MAX_ITEM_PAGE; i++) {
+            ItemPageFragment itemPageFragment = ItemPageFragment.newInstance(WorldUtils.PAGE_TITLES[i]);
+            itemPageFragments.add(itemPageFragment);
         }
-        ItemsViewPagerAdapter pagerAdapter = new ItemsViewPagerAdapter(getChildFragmentManager(), itemFragments);
+        ItemsViewPagerAdapter pagerAdapter = new ItemsViewPagerAdapter(getChildFragmentManager(), itemPageFragments);
         mViewPager.setAdapter(pagerAdapter);
         TabLayout mTabLayout = rootView.findViewById(R.id.tab_layout_items);
         mTabLayout.setupWithViewPager(mViewPager);
