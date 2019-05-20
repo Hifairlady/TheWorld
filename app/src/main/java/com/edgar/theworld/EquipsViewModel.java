@@ -1,6 +1,7 @@
 package com.edgar.theworld;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -24,16 +25,12 @@ public class EquipsViewModel extends AndroidViewModel {
         return mAllEquipItems;
     }
 
-    public void filterEquipsByType(String itemType) {
-        mAllEquipItems = mEquipRepo.getAllEquipsByType(itemType);
-    }
-
     public List<EquipItem> getAllEqupsByType(String itemType) {
         return mEquipRepo.getAllEquipsByType(itemType).getValue();
     }
 
     //start to parse the item files and insert data into database
-    public void insertAllEquips() {
-        mEquipRepo.insertAllEquips();
+    public void insertAllEquips(Context context) {
+        mEquipRepo.insertAllEquips(context);
     }
 }

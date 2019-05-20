@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,10 +35,16 @@ public class EquipItemsAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         NormalViewHolder viewHolder = (NormalViewHolder) holder;
-        viewHolder.tvNameChs.setText(equipItems.get(viewHolder.getAdapterPosition()).getNameChs());
-        viewHolder.tvNameEng.setText(equipItems.get(viewHolder.getAdapterPosition()).getNameEng());
-        viewHolder.tvLevel.setText(equipItems.get(viewHolder.getAdapterPosition()).getItemLevel());
-        viewHolder.tvQuality.setText(equipItems.get(viewHolder.getAdapterPosition()).getItemQuality());
+        EquipItem equipItem = equipItems.get(viewHolder.getAdapterPosition());
+        viewHolder.tvNameChs.setText(equipItem.getNameChs());
+        viewHolder.tvNameEng.setText(equipItem.getNameEng());
+        viewHolder.tvLevel.setText(equipItem.getItemLevel());
+        viewHolder.tvQuality.setText(equipItem.getItemQuality());
+        Glide.with(viewHolder.ivIcon)
+                .load(equipItem.getItemArtPath())
+                .placeholder(R.drawable.loading)
+                .error(R.drawable.default_icon)
+                .into(viewHolder.ivIcon);
     }
 
     @Override
@@ -52,7 +60,7 @@ public class EquipItemsAdapter extends RecyclerView.Adapter {
 
     private class NormalViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView ivCover;
+        private ImageView ivIcon;
         private TextView tvNameChs;
         private TextView tvNameEng;
         private TextView tvLevel;
@@ -60,7 +68,7 @@ public class EquipItemsAdapter extends RecyclerView.Adapter {
 
         public NormalViewHolder(@NonNull View itemView) {
             super(itemView);
-            ivCover = itemView.findViewById(R.id.iv_item_icon);
+            ivIcon = itemView.findViewById(R.id.iv_item_icon);
             tvNameChs = itemView.findViewById(R.id.tv_item_name_chs);
             tvNameEng = itemView.findViewById(R.id.tv_item_name_eng);
             tvLevel = itemView.findViewById(R.id.tv_item_level);

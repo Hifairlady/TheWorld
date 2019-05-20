@@ -9,9 +9,18 @@ public class EquipItem {
     @PrimaryKey
     private int itemId;
 
-    private String nameChs, nameEng, itemIndex, itemDescription, itemArt, itemType, itemQuality, itemLevel;
+    private String itemIndex, nameChs, nameEng, itemArtPath, itemType, itemLevel, itemQuality, itemDescription;
 
-    public EquipItem() {
+    public EquipItem(int itemId, String itemIndex, String nameChs, String nameEng, String itemArtPath, String itemType, String itemLevel, String itemQuality, String itemDescription) {
+        this.itemId = itemId;
+        this.itemIndex = itemIndex;
+        this.nameChs = nameChs;
+        this.nameEng = nameEng;
+        this.itemArtPath = itemArtPath;
+        this.itemType = itemType;
+        this.itemLevel = itemLevel;
+        this.itemQuality = itemQuality;
+        this.itemDescription = itemDescription;
     }
 
     public String getItemLevel() {
@@ -62,12 +71,12 @@ public class EquipItem {
         this.itemDescription = itemDescription;
     }
 
-    public String getItemArt() {
-        return itemArt;
+    public String getItemArtPath() {
+        return itemArtPath;
     }
 
-    public void setItemArt(String itemArt) {
-        this.itemArt = itemArt;
+    public void setItemArtPath(String itemArtPath) {
+        this.itemArtPath = itemArtPath;
     }
 
     public String getItemType() {

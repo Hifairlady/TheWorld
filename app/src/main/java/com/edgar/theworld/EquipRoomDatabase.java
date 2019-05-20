@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {EquipItem.class}, version = 1)
+@Database(entities = {EquipItem.class}, version = 1, exportSchema = false)
 public abstract class EquipRoomDatabase extends RoomDatabase {
 
     private static volatile EquipRoomDatabase INSTANCE;

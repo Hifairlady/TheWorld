@@ -68,9 +68,11 @@ public class ItemPageFragment extends Fragment {
         equipsViewModel.getAllEquipItems().observe(getActivity(), new Observer<List<EquipItem>>() {
             @Override
             public void onChanged(List<EquipItem> equipItems) {
-                List<EquipItem> equipItemList = equipsViewModel.getAllEqupsByType(mPageTitle);
-                itemsAdapter.setAllEquips(equipItemList);
+//                List<EquipItem> equipItemList = equipsViewModel.getAllEqupsByType(mPageTitle);
+//                itemsAdapter.setAllEquips(equipItemList);
+                itemsAdapter.setAllEquips(equipItems);
             }
         });
+        equipsViewModel.insertAllEquips(getActivity());
     }
 }
