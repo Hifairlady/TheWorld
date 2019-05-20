@@ -1,7 +1,12 @@
 package com.edgar.theworld;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "equips_table")
 public class EquipItem {
 
+    @PrimaryKey
     private int itemId;
 
     private String nameChs, nameEng, itemIndex, itemDescription, itemArt, itemType, itemQuality;

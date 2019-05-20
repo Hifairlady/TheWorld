@@ -17,4 +17,9 @@
         <item name="fontFamily">@font/rubik</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="MyEquipItemTextStyle" parent="TextAppearance.MaterialComponents.Button">
+        <item name="fontFamily">@font/rubik</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>
