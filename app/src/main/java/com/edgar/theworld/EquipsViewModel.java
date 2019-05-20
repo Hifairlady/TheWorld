@@ -25,8 +25,8 @@ public class EquipsViewModel extends AndroidViewModel {
         return mAllEquipItems;
     }
 
-    public List<EquipItem> getAllEqupsByType(String itemType) {
-        return mEquipRepo.getAllEquipsByType(itemType).getValue();
+    public List<EquipItem> getAllEquipsByType(String itemType) {
+        return mEquipRepo.getAllEquipsByType(itemType);
     }
 
     //start to parse the item files and insert data into database

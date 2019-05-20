@@ -24,5 +24,5 @@ public interface EquipDao {
     LiveData<List<EquipItem>> getAllEquips();
 
     @Query("SELECT * FROM equips_table WHERE itemType LIKE :itemType ORDER BY itemId ASC")
-    LiveData<List<EquipItem>> getAllEquipsByType(String itemType);
+    List<EquipItem> getAllEquipsByType(String itemType);
 }

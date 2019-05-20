@@ -3,6 +3,7 @@ package com.edgar.theworld;
 import android.app.Application;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -40,7 +41,7 @@ public class EquipRepository {
         return mAllEquipItems;
     }
 
-    public LiveData<List<EquipItem>> getAllEquipsByType(String itemType) {
+    public List<EquipItem> getAllEquipsByType(String itemType) {
         return mEquipDao.getAllEquipsByType(itemType);
     }
 
@@ -57,6 +58,7 @@ public class EquipRepository {
         private EquipDao equipDao;
         private Context mContext;
         private List<String> allNames = new ArrayList<String>();
+        private int[] itemAmounts = new int[PAGE_TITLES.length];
 
         public InsertAllTask(Context context, EquipDao equipDao) {
             this.mContext = context;
@@ -74,19 +76,19 @@ public class EquipRepository {
             List<String> miscNames = readingNamesFromAsset(DATA_FILE_NAMES[6]);
 
             allNames.addAll(weaponNames);
-            allNames.add(PAGE_TITLES[0]);
+            itemAmounts[0] = allNames.size();
             allNames.addAll(helmetNames);
-            allNames.add(PAGE_TITLES[1]);
+            itemAmounts[1] = allNames.size();
             allNames.addAll(clothNames);
-            allNames.add(PAGE_TITLES[2]);
+            itemAmounts[2] = allNames.size();
             allNames.addAll(accessoryNames);
-            allNames.add(PAGE_TITLES[3]);
+            itemAmounts[3] = allNames.size();
             allNames.addAll(wingNames);
-            allNames.add(PAGE_TITLES[4]);
+            itemAmounts[4] = allNames.size();
             allNames.addAll(bossIconNames);
-            allNames.add(PAGE_TITLES[5]);
+            itemAmounts[5] = allNames.size();
             allNames.addAll(miscNames);
-            allNames.add(PAGE_TITLES[6]);
+            itemAmounts[6] = allNames.size();
 
             parseAndInsert(mContext);
 
@@ -102,10 +104,7 @@ public class EquipRepository {
                         .open(filename), StandardCharsets.UTF_8));
                 String lineString = "";
                 while ((lineString = reader.readLine()) != null) {
-
-                    lineString = lineString.replaceAll(" ", "");
                     result.add(lineString);
-
                 }
             } catch (IOException ioe) {
                 ioe.printStackTrace();
@@ -123,7 +122,6 @@ public class EquipRepository {
         }
 
         private void parseAndInsert(Context context) {
-            int itemId = 0;
 
             BufferedReader reader = null;
             try {
@@ -131,6 +129,7 @@ public class EquipRepository {
                 String lineString;
 
                 boolean isValidItem = true;
+                int itemId = 0;
                 String itemIndex = "Default";
                 String nameChs = "Default";
                 String nameEng = "Default";
@@ -164,14 +163,17 @@ public class EquipRepository {
                         if (!allNames.contains(nameChs)) {
                             isValidItem = false;
                         } else {
+                            itemId = allNames.indexOf(nameChs);
                             itemArtPath = getItemArtPath(nameChs);
-                            int index = allNames.indexOf(nameChs);
-                            for (String pageTitle : PAGE_TITLES) {
-                                if (index >= 0 && index < allNames.indexOf(pageTitle)) {
-                                    itemType = pageTitle;
+
+                            for (int i = 0; i < itemAmounts.length; i++) {
+                                if (itemId >= 0 && itemId < itemAmounts[i]) {
+                                    itemType = PAGE_TITLES[i];
+                                    Log.d(TAG, "parseAndInsert: " + nameChs + " is a " + itemType);
                                     break;
                                 }
                             }
+
                         }
                         continue;
                     }
