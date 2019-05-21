@@ -17,7 +17,6 @@ import java.util.List;
 import static com.edgar.theworld.WorldUtils.DATA_FILE_NAMES;
 import static com.edgar.theworld.WorldUtils.PAGE_TITLES;
 import static com.edgar.theworld.WorldUtils.getDescriptionString;
-import static com.edgar.theworld.WorldUtils.getIconFilePath;
 import static com.edgar.theworld.WorldUtils.getIndexString;
 import static com.edgar.theworld.WorldUtils.getItemArtPath;
 import static com.edgar.theworld.WorldUtils.getItemNameChs;
@@ -41,7 +40,7 @@ public class EquipRepository {
         return mAllEquipItems;
     }
 
-    public List<EquipItem> getAllEquipsByType(String itemType) {
+    public LiveData<List<EquipItem>> getAllEquipsByType(String itemType) {
         return mEquipDao.getAllEquipsByType(itemType);
     }
 
@@ -67,6 +66,7 @@ public class EquipRepository {
 
         @Override
         protected Void doInBackground(Void... voids) {
+
             List<String> weaponNames = readingNamesFromAsset(DATA_FILE_NAMES[0]);
             List<String> helmetNames = readingNamesFromAsset(DATA_FILE_NAMES[1]);
             List<String> clothNames = readingNamesFromAsset(DATA_FILE_NAMES[2]);
@@ -104,6 +104,8 @@ public class EquipRepository {
                         .open(filename), StandardCharsets.UTF_8));
                 String lineString = "";
                 while ((lineString = reader.readLine()) != null) {
+                    lineString = lineString.replace(" ", "");
+                    lineString = lineString.replace("+", " +");
                     result.add(lineString);
                 }
             } catch (IOException ioe) {
@@ -122,11 +124,12 @@ public class EquipRepository {
         }
 
         private void parseAndInsert(Context context) {
+            EquipItem[] equipItems = new EquipItem[allNames.size()];
 
             BufferedReader reader = null;
             try {
                 reader = new BufferedReader(new InputStreamReader(context.getAssets().open(DATA_FILE_NAMES[7]), StandardCharsets.UTF_8));
-                String lineString;
+                String lineString = null;
 
                 boolean isValidItem = true;
                 int itemId = 0;
@@ -140,14 +143,22 @@ public class EquipRepository {
                 String itemDescription = "Default";
                 while ((lineString = reader.readLine()) != null) {
 
-                    if (lineString.startsWith("[")) {
-                        isValidItem = true;
-                        itemIndex = getIndexString(lineString);
-                        continue;
+                    if (lineString.equals("[END]")) {
+                        Log.d(TAG, "parseAndInsert: " + lineString);
+                        break;
                     }
 
-                    if (lineString.startsWith("Art=")) {
-                        itemArtPath = getIconFilePath(lineString);
+                    if (lineString.startsWith("[")) {
+                        isValidItem = true;
+                        itemId = 0;
+                        itemIndex = getIndexString(lineString);
+                        nameChs = "Default";
+                        nameEng = "Default";
+                        itemArtPath = "Default";
+                        itemType = "Default";
+                        itemLevel = "Default";
+                        itemQuality = "Default";
+                        itemDescription = "Default";
                         continue;
                     }
 
@@ -169,7 +180,7 @@ public class EquipRepository {
                             for (int i = 0; i < itemAmounts.length; i++) {
                                 if (itemId >= 0 && itemId < itemAmounts[i]) {
                                     itemType = PAGE_TITLES[i];
-                                    Log.d(TAG, "parseAndInsert: " + nameChs + " is a " + itemType);
+//                                    Log.d(TAG, "itemId: " + itemId + " " + nameChs + " is a " + itemType);
                                     break;
                                 }
                             }
@@ -183,24 +194,21 @@ public class EquipRepository {
                         continue;
                     }
 
-                    if (lineString.startsWith("Tip=")) {
-                        isValidItem = false;
-                        continue;
-                    }
-
                     if (lineString.startsWith("Ubertip=") && isValidItem) {
                         // int itemId, String itemIndex, String nameChs, String nameEng,
                         // String itemArtPath, String itemType, String itemLevel,
                         // String itemQuality, String itemDescription
                         EquipItem item = new EquipItem(itemId, itemIndex, nameChs, nameEng,
                                 itemArtPath, itemType, itemLevel, itemQuality, itemDescription);
-                        equipDao.insertEquipItem(item);
-                        itemId++;
+                        equipItems[itemId] = item;
                     }
 
                 }
+                equipDao.insertEquipItems(equipItems);
+
             } catch (IOException ioe) {
                 ioe.printStackTrace();
+
             } finally {
                 if (reader != null) {
                     try {

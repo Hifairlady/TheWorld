@@ -2,6 +2,7 @@ package com.edgar.theworld;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class ItemPageFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String CUR_PAGE_TITLE = "CUR_PAGE_TITLE";
+    private static final String TAG = ItemPageFragment.class.getName();
 
     // TODO: Rename and change types of parameters
     private String mPageTitle;
@@ -65,14 +67,20 @@ public class ItemPageFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         equipsViewModel = ViewModelProviders.of(getActivity()).get(EquipsViewModel.class);
-        equipsViewModel.getAllEquipItems().observe(getActivity(), new Observer<List<EquipItem>>() {
+        equipsViewModel.getAllEquipItems().observe(getViewLifecycleOwner(), new Observer<List<EquipItem>>() {
             @Override
             public void onChanged(List<EquipItem> equipItems) {
-//                List<EquipItem> equipItemList = equipsViewModel.getAllEquipsByType(mPageTitle);
-//                itemsAdapter.setAllEquips(equipItemList);
+
+                List<EquipItem> equipItemList = equipsViewModel.getAllEquipsByType(mPageTitle);
+                if (equipItemList == null) {
+                    Log.d(TAG, "onChanged: null list");
+                } else {
+                    Log.d(TAG, "onChanged: " + equipItemList.size());
+                }
+//                itemsAdapter.setAllEquips(equipItemList)
+                Log.d(TAG, "onChanged: " + mPageTitle);
                 itemsAdapter.setAllEquips(equipItems);
             }
         });
-        equipsViewModel.insertAllEquips(getActivity());
     }
 }

@@ -1,6 +1,7 @@
 package com.edgar.theworld;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -17,6 +19,7 @@ import java.util.List;
 
 public class EquipItemsAdapter extends RecyclerView.Adapter {
 
+    private static final String TAG = EquipItemsAdapter.class.getName();
     private Context mContext;
     private ArrayList<EquipItem> equipItems = new ArrayList<>();
 
@@ -35,7 +38,7 @@ public class EquipItemsAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         NormalViewHolder viewHolder = (NormalViewHolder) holder;
-        EquipItem equipItem = equipItems.get(viewHolder.getAdapterPosition());
+        final EquipItem equipItem = equipItems.get(viewHolder.getAdapterPosition());
         viewHolder.tvNameChs.setText(equipItem.getNameChs());
         viewHolder.tvNameEng.setText(equipItem.getNameEng());
         viewHolder.tvLevel.setText(equipItem.getItemLevel());
@@ -45,6 +48,12 @@ public class EquipItemsAdapter extends RecyclerView.Adapter {
                 .placeholder(R.drawable.loading)
                 .error(R.drawable.default_icon)
                 .into(viewHolder.ivIcon);
+        viewHolder.rootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: " + equipItem.getItemType());
+            }
+        });
     }
 
     @Override
@@ -65,6 +74,7 @@ public class EquipItemsAdapter extends RecyclerView.Adapter {
         private TextView tvNameEng;
         private TextView tvLevel;
         private TextView tvQuality;
+        private ConstraintLayout rootView;
 
         public NormalViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,6 +83,7 @@ public class EquipItemsAdapter extends RecyclerView.Adapter {
             tvNameEng = itemView.findViewById(R.id.tv_item_name_eng);
             tvLevel = itemView.findViewById(R.id.tv_item_level);
             tvQuality = itemView.findViewById(R.id.tv_item_quality);
+            rootView = itemView.findViewById(R.id.item_root_view);
         }
     }
 

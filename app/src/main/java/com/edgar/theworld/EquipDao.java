@@ -23,6 +23,6 @@ public interface EquipDao {
     @Query("SELECT * FROM equips_table ORDER BY itemId ASC")
     LiveData<List<EquipItem>> getAllEquips();
 
-    @Query("SELECT * FROM equips_table WHERE itemType LIKE :itemType ORDER BY itemId ASC")
-    List<EquipItem> getAllEquipsByType(String itemType);
+    @Query("SELECT * FROM equips_table WHERE itemType = :itemType ORDER BY itemId ASC")
+    LiveData<List<EquipItem>> getAllEquipsByType(String itemType);
 }

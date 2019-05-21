@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -22,6 +24,8 @@ public class EquipsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private EquipsViewModel equipsViewModel;
 
 
     public EquipsFragment() {
@@ -67,4 +71,12 @@ public class EquipsFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        equipsViewModel = ViewModelProviders.of(getActivity()).get(EquipsViewModel.class);
+        if (equipsViewModel.getAllEquipItems().getValue() == null || equipsViewModel.getAllEquipItems().getValue().size() == 0) {
+            equipsViewModel.insertAllEquips(getActivity());
+        }
+    }
 }

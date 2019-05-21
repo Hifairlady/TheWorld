@@ -53,6 +53,8 @@ public class WorldUtils {
         nameString = removeColorCodes(nameString);
         nameString = removeNewLinesAndQuotes(nameString);
         nameString = nameString.replace("Name=", "");
+        nameString = nameString.replace(" ", "");
+        nameString = nameString.replace("+", " +");
         return nameString;
     }
 
